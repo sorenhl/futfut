@@ -1,0 +1,23 @@
+{
+  "name": "futfut",
+  "version": "1.0.0",
+  "description": "Allows control of train etc. through bluetooth and web API",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sorenhl/futfut"
+  },
+  "author": "Team NORRIQ E-business",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sorenhl/futfut/issues"
+  },
+  "homepage": "https://github.com/sorenhl/futfut"
+}
