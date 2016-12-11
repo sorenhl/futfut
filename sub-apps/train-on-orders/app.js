@@ -12,34 +12,58 @@ var lastOrder = null;
 function loop() {
 
     var requestOptions = {
-        uri: 'https://jsonplaceholder.typicode.com/posts/1', // temp to test
+        uri: 'http://kibana.niqweb.dk:9200/slog-*/_search',
         method: 'GET',
         json: {
-            "query": {
-                "match_all": {}
-            },
-            "size": 1,
-            "sort": [
-                {
-                "_timestamp": {
-                    "order": "desc"
-                }
-                }
-            ]
+  "query": {
+    "filtered": {
+      "query": {
+        "query_string": {
+          "query": "method:/[^\\.]+\\.(sendorder|OrderCompleted)/ AND NOT trigger:fallback",
+          "analyze_wildcard": true
         }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "timestamp": {
+                  "gte": 1481410800000,
+                  "lte": 1481497199999,
+                  "format": "epoch_millis"
+                }
+              }
+            }
+          ],
+          "must_not": []
+        }
+      }
+    }
+  },
+  "size": 1,
+  "sort": [
+    {
+      "timestamp": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+     
     };
 
     request(
         requestOptions,
         function (error, response, body) {
-            
+            //console.log(body);
             if (!error && response.statusCode == 200) {
-                // The object is already json :)
-                var lastOrderResponse = body.id;
-            
+                // The object is already json so lets fetch timestamp :)
+                var lastOrderResponse = body.hits.hits[0]._source.timestamp;
             
                 // Check if we should make the train run, i.e. new order
                 if(lastOrder != null && lastOrderResponse != lastOrder){
+                    console.log('Triggering train!');
                     request.get(
                         'http://localhost:8080/trigger?entity=train&isClockwise=1&speed=75&duration=5000', 
                         function (error, response, body) {
@@ -48,13 +72,15 @@ function loop() {
                         }
                     });
 
+                } else {
+                  console.log('Last order: ' + lastOrderResponse + ' (same as last time we asked)');
                 }
                 lastOrder = lastOrderResponse;
             } else {
                 console.error('Unexpected result from kiabana:' + error + response.statusCode);
             }
        // Check a second after response (to avoid building up requests)
-        setTimeout(loop,1000); 
+        setTimeout(loop,10000); 
     });
 }
 loop();
