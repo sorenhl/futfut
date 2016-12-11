@@ -36,11 +36,11 @@ function SBrick(bluetoothDevice, bluetoothId, handle, port)
             var currentSpeed = Math.min(maxSpeedBasedOnTime, brick.speed);
             var speedInBytes = Math.round(255.0 / 100.0 * currentSpeed).toString(16);
 
-            var command = 'gatttool ' 
-                            + '-b ' + brick.bluetoothDevice 
-                            + ' -i ' + brick.bluetoothId 
+            var command = 'gatttool' 
+                            + ' -i ' + brick.bluetoothDevice 
+                            + ' -b ' + brick.bluetoothId 
                             + ' --char-write' 
-                            + '--handle=' + brick.handle 
+                            + ' --handle=' + brick.handle 
                             + ' --value=01'
                             + zfill(brick.port.toString(16),2)
                             + (brick.isClockwise ? '00' : '01')
