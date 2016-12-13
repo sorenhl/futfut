@@ -10,8 +10,19 @@ var app = express();
 var entities = {
     'train': {
         brick: new engine.SBrick('hci0','00:07:80:D0:58:A2','0x001A',1)
+    },
+    'windmill': {
+        brick: new engine.SBrick('hci0','00:07:80:D0:36:EC','0x001A',1)
+    },
+    'ferriswheel': {
+        brick: new engine.SBrick('hci0','00:07:80:D0:36:EC','0x001A',2)
+    },
+    'santaclaus': {
+        brick: new engine.SBrick('hci0','00:07:80:D0:36:EC','0x001A',3)
     }
 };
+
+
 
 app.get('/', function (req, res) {
     //res.setHeader('Content-Type', 'text/plain');
@@ -20,7 +31,7 @@ app.get('/', function (req, res) {
     for(var name in entities)
     {
         var url = '/trigger?entity=' + name + '&isClockwise=1&speed=75&duration=5000'
-        msg += '<li>' + name + ' (example for 75 % speed for 5 seconds: <a href=' + url + '>' + url +  '</a>)</ul>';
+        msg += '<li>' + name + ' (example for 75 % speed for 5 seconds: <a href=' + url + '>' + url +  '</a>)</li>';
     }
     '</ul>';
   res.send(msg);

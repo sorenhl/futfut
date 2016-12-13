@@ -26,15 +26,6 @@ function loop() {
       "filter": {
         "bool": {
           "must": [
-            {
-              "range": {
-                "timestamp": {
-                  "gte": 1481410800000,
-                  "lte": 1481497199999,
-                  "format": "epoch_millis"
-                }
-              }
-            }
           ],
           "must_not": []
         }
@@ -65,7 +56,7 @@ function loop() {
                 if(lastOrder != null && lastOrderResponse != lastOrder){
                     console.log('Triggering train!');
                     request.get(
-                        'http://localhost:8080/trigger?entity=train&isClockwise=1&speed=75&duration=5000', 
+                        'http://localhost:8080/trigger?entity=train&isClockwise=1&speed=75&duration=8000', 
                         function (error, response, body) {
                         if(error) {
                             console.log('Error starting train: ' + error);
