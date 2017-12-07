@@ -39,9 +39,9 @@ function SBrick(bluetoothDevice, bluetoothId, handle, port)
             var command = 'gatttool' 
                             + ' -i ' + brick.bluetoothDevice 
                             + ' -b ' + brick.bluetoothId 
-                            + ' --char-write' 
-                            + ' --handle=' + brick.handle 
-                            + ' --value=01'
+                            + ' --char-write-req' 
+                            + ' -a ' + brick.handle 
+                            + ' -n 01'
                             + zfill(brick.port.toString(16),2)
                             + (brick.isClockwise ? '00' : '01')
                             + zfill(speedInBytes,2)
