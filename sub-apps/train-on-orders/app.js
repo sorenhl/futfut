@@ -16,21 +16,20 @@ function loop() {
         method: 'GET',
         json: {
   "query": {
-    "filtered": {
-      "query": {
         "query_string": {
           "query": "method:/[^\\.]+\\.(sendorder|OrderCompleted)/ AND NOT trigger:fallback",
           "analyze_wildcard": true
         }
-      },
-      "filter": {
-        "bool": {
-          "must": [
-          ],
-          "must_not": []
-        }
+  },
+  "size": 1,
+  "sort": [
+    {
+      "timestamp": {
+        "order": "desc"
       }
     }
+  ]
+}
   },
   "size": 1,
   "sort": [
