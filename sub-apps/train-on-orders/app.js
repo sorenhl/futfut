@@ -30,16 +30,6 @@ function loop() {
     }
   ]
 }
-  },
-  "size": 1,
-  "sort": [
-    {
-      "timestamp": {
-        "order": "desc"
-      }
-    }
-  ]
-}
      
     };
 
